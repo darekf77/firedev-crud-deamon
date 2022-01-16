@@ -1,12 +1,13 @@
 //#region imports
 //#region @backend
 import { WorkersFactor } from 'background-worker-process';
+import { path, _, chokidar, glob, fse, crossPlatformPath } from 'tnp-core';
 //#endregion
 //#region isomorphic
 import { FiredevCrud, FiredevCrudInitOptions } from 'firedev-crud';
 import { Morphi } from 'morphi';
 import { Helpers } from 'tnp-helpers';
-import { Models } from 'tnp-models';
+import { Models, BaseController, DBBaseEntity } from 'tnp-models';
 import { CLASS } from 'typescript-class-helpers';
 import { PortsController, PortInstance } from 'firedev-ports';
 //#endregion
@@ -18,14 +19,15 @@ declare const global: any;
 @CLASS.NAME('FiredevCrudDeamon')
 export class FiredevCrudDeamon extends FiredevCrud {
   //#region fields & getters
+  private watchers = {};
   public worker: DbDaemonController;
   public context: Morphi.FrameworkContext;
   //#endregion
 
   //#region constructor
   constructor(
-    protected controllers: (typeof Models.db.BaseController)[] = [],
-    protected entities: (typeof Models.db.DBBaseEntity)[] = [],
+    protected controllers: (typeof BaseController)[] = [],
+    protected entities: (typeof DBBaseEntity)[] = [],
   ) {
     super(controllers, entities);
     //#region @backend
@@ -52,6 +54,7 @@ export class FiredevCrudDeamon extends FiredevCrud {
     await super.init(options);
     if (global.useWorker) {
       await this.initDeamon(options.recreate || global.restartWorker);
+      await this.initWatchingDb()
     }
     //#endregion
   }
@@ -78,6 +81,26 @@ export class FiredevCrudDeamon extends FiredevCrud {
     return res;
     //#endregion
   }
+  //#endregion
+
+  //#region api / init watching db.json
+  async initWatchingDb() {
+    // //#region @backend
+    // if (this.watchers[this.location]) {
+    //   Helpers.warn('[firedev-crud-demon] already watching db.json')
+    //   return;
+    // }
+    // const watcher: chokidar.FSWatcher = chokidar.watch([this.location], {
+    //   ignoreInitial: true,
+    //   ignorePermissionErrors: true,
+    // }).on('all', async (event, f) => {
+    //   f = crossPlatformPath(f);
+    //   console.log('file change d', f, event);
+    // });
+    // this.watchers[this.location] = watcher;
+    // //#endregion
+  }
+
   //#endregion
 
   //#region api / init deamon
@@ -123,6 +146,9 @@ export class FiredevCrudDeamon extends FiredevCrud {
     // process.exit(0)
     // const copyRes = await this.worker.copyAllToWorker(await this.getAll(ProjectInstance)).received;
     // console.log(copyRes.body.text);
+
+
+
     //#endregion
   }
   //#endregion
