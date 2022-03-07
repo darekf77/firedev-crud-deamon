@@ -1,5 +1,5 @@
 //#region @notForNpm
-import { FiredevCrudDeamon } from './firedev-crud-deamon'
+import { FiredevCrudDeamon } from './lib/firedev-crud-deamon'
 
 export default async function () {
   //#region @backend

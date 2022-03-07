@@ -2,13 +2,7 @@
   "resources": [
     "README.md"
   ],
-  "isCoreProject": false,
-  "useFramework": false,
-  "type": "isomorphic-lib",
-  "required": [
-    "backgroud-worker-process"
-  ],
-  "version": "v2",
+
   "overrided": {
     "ignoreDepsPattern": [],
     "includeAsDev": [],
@@ -22,10 +16,19 @@
     "obscure": false,
     "ugly": false
   },
+
+  "isCoreProject": false,
+
+  "useFramework": false,
+
+  "type": "isomorphic-lib",
+
+  "required": [
+    "backgroud-worker-process"
+  ],
+
+  "version": "v3",
+
   "workerPlugins": {},
-  "license": "UNLICENSED",
-  "private": true,
-  "main": "index.js",
-  "isGenerated": false,
-  "requiredServers": []
+  "license": "UNLICENSED"
 }
