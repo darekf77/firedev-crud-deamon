@@ -6,7 +6,7 @@
   "overrided": {
     "ignoreDepsPattern": [],
     "includeAsDev": [],
-    "includeOnly": [],
+    "includeOnly": ["backgroud-worker-process"],
     "dependencies": {},
     "linkedFolders": []
   },
@@ -24,7 +24,7 @@
   "type": "isomorphic-lib",
 
   "required": [
-    "backgroud-worker-process"
+
   ],
 
   "version": "v3",
