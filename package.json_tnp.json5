@@ -17,11 +17,11 @@
     "ugly": false
   },
 
+  "type": "isomorphic-lib",
+
   "isCoreProject": false,
 
   "useFramework": false,
-
-  "type": "isomorphic-lib",
 
   "required": [
 
