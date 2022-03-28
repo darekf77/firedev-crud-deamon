@@ -1,7 +1,7 @@
 {
   "name": "firedev-crud-deamon",
   "version": "13.0.7",
-  "license": "MIT",
+  "license": "UNLICENSED",
   "dependencies": {},
   "devDependencies": {
     "@angular-devkit/build-angular": "~13.2.5",
@@ -230,6 +230,5 @@
     "vpn-split": "13.0.5",
     "watch": "1.0.2",
     "zone.js": "~0.11.4"
-  },
-  "private": false
+  }
 }
