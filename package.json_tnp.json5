@@ -6,7 +6,7 @@
   "overrided": {
     "ignoreDepsPattern": [],
     "includeAsDev": [],
-    "includeOnly": ["backgroud-worker-process"],
+    "includeOnly": ["background-worker-process"],
     "dependencies": {},
     "linkedFolders": []
   },
