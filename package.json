@@ -1,7 +1,7 @@
 {
   "name": "firedev-crud-deamon",
   "version": "13.0.12",
-  "license": "MIT",
+  "license": "UNLICENSED",
   "dependencies": {
     "background-worker-process": "~13.0.13"
   },
@@ -232,6 +232,5 @@
     "watch": "1.0.2",
     "zone.js": "~0.11.4"
   },
-  "lastBuildTagHash": "f7135e7c219c060652cd9c9a2311608a1020633e",
-  "private": false
+  "lastBuildTagHash": "f7135e7c219c060652cd9c9a2311608a1020633e"
 }
