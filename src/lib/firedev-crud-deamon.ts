@@ -5,7 +5,7 @@ import { path, _, chokidar, glob, fse, crossPlatformPath } from 'tnp-core';
 //#endregion
 //#region isomorphic
 import { FiredevCrud, FiredevCrudInitOptions } from 'firedev-crud';
-import { Morphi } from 'morphi';
+import { Morphi as Firedev } from 'morphi';
 import { Helpers } from 'tnp-helpers';
 import { Models, BaseController, DBBaseEntity } from 'tnp-models';
 import { CLASS } from 'typescript-class-helpers';
@@ -21,7 +21,7 @@ export class FiredevCrudDeamon extends FiredevCrud {
   //#region fields & getters
   private watchers = {};
   public worker: DbDaemonController;
-  public context: Morphi.FrameworkContext;
+  public context: Firedev.FrameworkContext;
   //#endregion
 
   //#region constructor

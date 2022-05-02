@@ -1,5 +1,3 @@
-import { Morphi } from 'morphi';
-
 import { DbDaemonController } from './deamon-controller';
 export { DbDaemonController } from './deamon-controller';
 export * from './daemon-entity';

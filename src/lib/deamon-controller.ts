@@ -1,6 +1,6 @@
 //#region imports
 //#region isomorphic
-import { Morphi } from 'morphi';
+import { Morphi as Firedev } from 'morphi';
 import {
   _, moment,
   //#region @backend
@@ -20,12 +20,12 @@ import { WorkerProcessClass } from 'background-worker-process';
 
 const TEXT_AREA_CSS = 'style="width: 772px; min-height: 50px;"';
 
-@Morphi.Controller({
+@Firedev.Controller({
   className: 'DbDaemonController'
 })
 export class DbDaemonController
   //#region @backend
-  extends WorkerProcessClass implements Morphi.BASE_CONTROLLER_INIT, IDBCrud
+  extends WorkerProcessClass implements Firedev.BASE_CONTROLLER_INIT, IDBCrud
 //#endregion
 {
   //#region fields / getters
@@ -94,8 +94,8 @@ export class DbDaemonController
   //#endregion
 
   //#region methods / default write to db
-  @Morphi.Http.POST('/defaults')
-  defaultsWriteToDB(@Morphi.Http.Param.Body('data') data: any): Morphi.Response<any> {
+  @Firedev.Http.POST('/defaults')
+  defaultsWriteToDB(@Firedev.Http.Param.Body('data') data: any): Firedev.Response<any> {
     //#region @backendFunc
     return async (req, res) => {
       this.log(`defaultsWriteToDB: <br>${JSON.stringify(data)} `);
@@ -121,8 +121,8 @@ export class DbDaemonController
   //#endregion
 
   //#region methods / trigger save
-  @Morphi.Http.PUT('/save')
-  triggerSave(): Morphi.Response<any> {
+  @Firedev.Http.PUT('/save')
+  triggerSave(): Firedev.Response<any> {
     //#region @backendFunc
     return async () => {
       this.log(`[triggerSave]`)
@@ -133,21 +133,21 @@ export class DbDaemonController
   //#endregion
 
   //#region methods / trigger change of projects
-  @Morphi.Http.GET()
+  @Firedev.Http.GET()
   triggerChangeOfProject(
-    @Morphi.Http.Param.Query('location') location: string,
-    @Morphi.Http.Param.Query('channel') channel: string,
-  ): Morphi.Response<any> {
+    @Firedev.Http.Param.Query('location') location: string,
+    @Firedev.Http.Param.Query('channel') channel: string,
+  ): Firedev.Response<any> {
     //#region @backendFunc
     return async () => {
       this.logArr = [];
       if (channel) {
         this.log(`[TrigggerEntityPropertyChanges] for locatino: "${location}", channel: "${channel}"`);
         const a = DbUpdateProjectEntity.for({ location } as any);
-        Morphi.Realtime.Server.TrigggerEntityPropertyChanges(a, channel);
+        Firedev.Realtime.Server.TrigggerEntityPropertyChanges(a, channel);
       } else {
         this.log(`[triggerChangeOfProject] for locatino: "${location}"`)
-        Morphi.Realtime.Server.TrigggerEntityChanges(DbUpdateProjectEntity, location);
+        Firedev.Realtime.Server.TrigggerEntityChanges(DbUpdateProjectEntity, location);
       }
 
     }
@@ -156,10 +156,10 @@ export class DbDaemonController
   //#endregion
 
   //#region methods / set value to db
-  @Morphi.Http.PUT('/set')
+  @Firedev.Http.PUT('/set')
   setValueToDb(
-    @Morphi.Http.Param.Query('objPath') objPath: string,
-    @Morphi.Http.Param.Body('json') json: object): Morphi.Response<any> {
+    @Firedev.Http.Param.Query('objPath') objPath: string,
+    @Firedev.Http.Param.Body('json') json: object): Firedev.Response<any> {
     //#region @backendFunc
     return async (req, res) => {
       this.log(`[setValueToDb] key ${objPath} = <br> <textarea ${TEXT_AREA_CSS} >${JSON.stringify(json, null, 4)
@@ -184,8 +184,8 @@ export class DbDaemonController
   //#endregion
 
   //#region methods / get value from db
-  @Morphi.Http.GET('/get')
-  getValueFromDb(@Morphi.Http.Param.Query('objPath') objPath: string): Morphi.Response<any> {
+  @Firedev.Http.GET('/get')
+  getValueFromDb(@Firedev.Http.Param.Query('objPath') objPath: string): Firedev.Response<any> {
     //#region @backendFunc
     return async (req, res) => {
       this.log(`[getValueFromDb] key ${objPath} = <br> <textarea ${TEXT_AREA_CSS} >${this.data[objPath] ? JSON.stringify(this.data[objPath]) : '<nothing>'
@@ -210,11 +210,11 @@ export class DbDaemonController
   //#region methods / copy all to worker
   //#region @backend
 
-  @Morphi.Http.POST()
+  @Firedev.Http.POST()
   copyAllToWorker(
-    @Morphi.Http.Param.Body('data') data: any,
-    @Morphi.Http.Param.Query('pathToDb') pathToDb: string
-  ): Morphi.Response<any> {
+    @Firedev.Http.Param.Body('data') data: any,
+    @Firedev.Http.Param.Query('pathToDb') pathToDb: string
+  ): Firedev.Response<any> {
     return async (req, res) => {
       this.log(`[copyAllToWorker]`)
       if (Helpers.exists(pathToDb)) {
@@ -231,8 +231,8 @@ export class DbDaemonController
   //#endregion
 
   //#region methods / hello
-  @Morphi.Http.GET()
-  hello(): Morphi.Response {
+  @Firedev.Http.GET()
+  hello(): Firedev.Response {
     //#region @backendFunc
     this.log(`[hello]`)
     return async (req, res) => 'hello';
@@ -241,8 +241,8 @@ export class DbDaemonController
   //#endregion
 
   //#region methods / all projects
-  @Morphi.Http.GET()
-  allprojects(): Morphi.Response<any> {
+  @Firedev.Http.GET()
+  allprojects(): Firedev.Response<any> {
     //#region @backendFunc
     return async (req, res) => {
       // const db = TnpDB.InstanceSync;
@@ -257,8 +257,8 @@ export class DbDaemonController
   //#endregion
 
   //#region methods / info
-  @Morphi.Http.GET('/info')
-  info(): Morphi.Response<string> {
+  @Firedev.Http.GET('/info')
+  info(): Firedev.Response<string> {
     return async () => {
       this.log(`[info]`)
       return `
@@ -272,8 +272,8 @@ export class DbDaemonController
   //#endregion
 
   //#region methods / show log
-  @Morphi.Http.GET('/log')
-  showLog(): Morphi.Response<string> {
+  @Firedev.Http.GET('/log')
+  showLog(): Firedev.Response<string> {
     return async () => {
       this.log(`[showLog]`)
       return this.logArr.join('<hr>')
@@ -282,7 +282,7 @@ export class DbDaemonController
   //#endregion
 
   //#region methods / whole db
-  @Morphi.Http.GET('/wholeDb')
+  @Firedev.Http.GET('/wholeDb')
   wholeDb() {
     //#region @backendFunc
     return async () => {
@@ -294,8 +294,8 @@ export class DbDaemonController
   //#endregion
 
   //#region methods / whole db with paths
-  @Morphi.Http.GET('/wholeDb/:pathToData')
-  wholeDbWithPath(@Morphi.Http.Param.Path('pathToData') pathToData: string) {
+  @Firedev.Http.GET('/wholeDb/:pathToData')
+  wholeDbWithPath(@Firedev.Http.Param.Path('pathToData') pathToData: string) {
     //#region @backendFunc
     return async () => {
       this.log(`[wholeDb]`)
@@ -307,8 +307,8 @@ export class DbDaemonController
   //#endregion
 
   //#region methods/ show entity
-  @Morphi.Http.GET('/entity/:entityname')
-  showEntity(@Morphi.Http.Param.Path('entityname') entityname: string): Morphi.Response<string> {
+  @Firedev.Http.GET('/entity/:entityname')
+  showEntity(@Firedev.Http.Param.Path('entityname') entityname: string): Firedev.Response<string> {
     //#region @backendFunc
     return async () => {
       const entity = this.data[entityname];
