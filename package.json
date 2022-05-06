@@ -118,7 +118,7 @@
     "file-loader": "1.1.5",
     "firedev": "^13",
     "firedev-crud": "~13.0.24",
-    "firedev-crud-deamon": "~13.0.16",
+    "firedev-crud-deamon": "~13.0.17",
     "firedev-ports": "~13.0.18",
     "firedev-storage": "~13.0.13",
     "fkill": "6.1.0",
@@ -235,6 +235,6 @@
     "watch": "1.0.2",
     "zone.js": "~0.11.4"
   },
-  "lastBuildTagHash": "109adc9d2efca2bf101599cdbc60e8287206ff7c",
+  "lastBuildTagHash": "04b56669102451905d9e41f43c623615251dd5e9",
   "private": false
 }
