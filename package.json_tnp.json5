@@ -10,7 +10,10 @@
     "dependencies": {},
     "linkedFolders": []
   },
+
   "linkedProjects": [],
+  'linkedRepos': [],
+
   "libReleaseOptions": {
     "nodts": false,
     "obscure": false,
@@ -18,9 +21,7 @@
   },
 
   "type": "isomorphic-lib",
-
   "isCoreProject": false,
-
   "useFramework": false,
 
   "required": [
@@ -28,7 +29,6 @@
   ],
 
   "version": "v3",
-
   "workerPlugins": {},
-  "license": "UNLICENSED"
+  "license": "UNLICENSED",
 }
