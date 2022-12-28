@@ -1,7 +1,4 @@
 {
-  "name": "firedev-crud-deamon",
-  "version": "13.1.25",
-  "license": "UNLICENSED",
   "dependencies": {
     "background-worker-process": "~13.1.30"
   },
@@ -119,7 +116,7 @@
     "firedev-crud-deamon": "~13.1.25",
     "firedev-ports": "~13.1.29",
     "firedev-storage": "~13.1.20",
-    "firedev-typeorm": "~13.1.6",
+    "firedev-typeorm": "~13.1.7",
     "fkill": "6.1.0",
     "font-awesome": "4.7.0",
     "fs-extra": "8.1.0",
@@ -236,5 +233,7 @@
     "watch": "1.0.2",
     "zone.js": "~0.11.4"
   },
-  "lastBuildTagHash": "369bfc31d95fa16e2801f739bc333fe4c11f3ccc"
+  "license": "UNLICENSED",
+  "name": "firedev-crud-deamon",
+  "version": "13.1.25"
 }
