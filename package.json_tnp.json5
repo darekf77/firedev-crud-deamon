@@ -32,7 +32,7 @@
 
   ],
 
-  "version": "v3",
+  "version": 'v16',
   "workerPlugins": {},
   "license": "UNLICENSED",
 }
