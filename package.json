@@ -152,7 +152,7 @@
     "file-saver": "2.0.5",
     "firedev": "^16",
     "firedev-crud": "~16.0.53",
-    "firedev-crud-deamon": "~16.0.42",
+    "firedev-crud-deamon": "~16.0.43",
     "firedev-ports": "~16.0.48",
     "firedev-storage": "~16.0.39",
     "firedev-typeorm": "~16.0.37",
@@ -287,5 +287,5 @@
   "license": "UNLICENSED",
   "name": "firedev-crud-deamon",
   "version": "16.0.43",
-  "lastBuildTagHash": "a1ce04b222fc777ed511a30eaad0847bec26ca4e"
+  "lastBuildTagHash": "f10d7f705149e9c04df28d0a8e674f311a0e7678"
 }
