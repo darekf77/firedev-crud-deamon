@@ -164,7 +164,7 @@
     "file-type": "18.5.0",
     "firedev": "^16",
     "firedev-crud": "~16.5.1",
-    "firedev-crud-deamon": "~16.0.45",
+    "firedev-crud-deamon": "~16.5.1",
     "firedev-ports": "~16.5.1",
     "firedev-storage": "~16.0.42",
     "firedev-type-sql": "~16.0.3",
@@ -314,5 +314,5 @@
   "license": "UNLICENSED",
   "name": "firedev-crud-deamon",
   "version": "16.5.1",
-  "lastBuildTagHash": "87a6a5953bb90483a0265d27e31ba1a97554717a"
+  "lastBuildTagHash": "3aff62f532e665e37d4ca0308507ddd553b8b972"
 }
