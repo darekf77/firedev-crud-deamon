@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 import { Morphi as Firedev } from 'morphi';
-import { Project } from 'tnp-helpers';
+import { BaseProject as Project } from 'tnp-helpers';
 
 @Firedev.Entity({
   className: 'DbUpdateProjectEntity',
