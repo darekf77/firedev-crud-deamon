@@ -1,183 +1,185 @@
-//#region imports
-//#region @backend
-import { WorkersFactor } from 'background-worker-process';
-import { path, _, chokidar, glob, fse, crossPlatformPath } from 'tnp-core';
-//#endregion
-//#region isomorphic
-import { FiredevCrud, FiredevCrudInitOptions } from 'firedev-crud';
-import { Morphi as Firedev } from 'morphi';
-import { Helpers } from 'tnp-helpers';
-import { Models, BaseController, DBBaseEntity } from 'tnp-models';
-import { CLASS } from 'typescript-class-helpers';
-import { PortsController, PortInstance } from 'firedev-ports';
-//#endregion
-import { DbUpdateProjectEntity } from './daemon-entity';
-import { DbDaemonController } from './deamon-controller';
-//#endregion
-declare const global: any;
+// // @ts-nocheck
+// //#region imports
+// //#region @backend
+// import { WorkersFactor } from 'background-worker-process';
+// import { path, _, chokidar, glob, fse, crossPlatformPath } from 'tnp-core';
+// //#endregion
+// //#region isomorphic
 
-@CLASS.NAME('FiredevCrudDeamon')
-export class FiredevCrudDeamon extends FiredevCrud {
-  //#region fields & getters
-  private watchers = {};
-  public worker: DbDaemonController;
-  public context: Firedev.FrameworkContext;
-  //#endregion
+// import { FiredevCrud, FiredevCrudInitOptions } from 'firedev-crud';
+// import { Morphi as Firedev } from 'morphi';
+// import { Helpers } from 'tnp-helpers';
+// import { Models, BaseController, DBBaseEntity } from 'tnp-models';
+// import { CLASS } from 'typescript-class-helpers';
+// import { PortsController, PortInstance } from 'firedev-ports';
+// //#endregion
+// import { DbUpdateProjectEntity } from './daemon-entity';
+// import { DbDaemonController } from './deamon-controller';
+// //#endregion
+// declare const global: any;
 
-  //#region constructor
-  constructor(
-    protected controllers: (typeof BaseController)[] = [],
-    protected entities: (typeof DBBaseEntity)[] = [],
-  ) {
-    super(controllers, entities);
-    //#region @backend
-    controllers.push(PortsController);
-    entities.push(PortInstance);
-    this.entities = Helpers.arrays.uniqArray(entities);
-    this.controllers = Helpers.arrays.uniqArray(controllers);
-    //#endregion
-  }
-  //#endregion
+// @CLASS.NAME('FiredevCrudDeamon')
+// export class FiredevCrudDeamon extends FiredevCrud {
+//   //#region fields & getters
+//   private watchers = {};
+//   public worker: DbDaemonController;
+//   public context: Firedev.FrameworkContext;
+//   //#endregion
 
-  //#region api
+//   //#region constructor
+//   constructor(
+//     protected controllers: (typeof BaseController)[] = [],
+//     protected entities: (typeof DBBaseEntity)[] = [],
+//   ) {
+//     super(controllers, entities);
+//     //#region @backend
+//     controllers.push(PortsController);
+//     entities.push(PortInstance);
+//     this.entities = Helpers.arrays.uniqArray(entities);
+//     this.controllers = Helpers.arrays.uniqArray(controllers);
+//     //#endregion
+//   }
+//   //#endregion
 
-  //#region  api / ports manager
-  async getPortsManager() {
-    const portsManager = await (await this.getCtrlInstanceBy<PortsController>(PortsController as any).manager);
-    return portsManager;
-  }
-  //#endregion
+//   //#region api
 
-  //#region api / init
-  async init(options?: FiredevCrudInitOptions) {
-    //#region @backend
-    await super.init(options);
-    if (global.useWorker) {
-      await this.initDeamon(options.recreate || global.restartWorker);
-      await this.initWatchingDb()
-    }
-    //#endregion
-  }
-  //#endregion
+//   //#region  api / ports manager
+//   async getPortsManager() {
+//     const portsManager = await (await this.getCtrlInstanceBy<PortsController>(PortsController as any).manager);
+//     return portsManager;
+//   }
+//   //#endregion
 
-  //#region api / create instance
-  private async createInstance(classFN, entities, registerdOnPort, startNew: boolean) {
-    //#region @backendFunc
-    const res = await WorkersFactor.create<DbDaemonController>(
-      classFN,
-      entities,
-      registerdOnPort,
-      {
-        killAlreadRegisteredProcess: startNew,
-        startWorkerServiceAsChildProcess: startNew,
-        disabledRealtime: false,
-        preventSameContexts: true,
-      }
-    );
-    if (process.platform === 'win32' && startNew) {
-      Helpers.info('Waiting 10 seconds on windows platofrom...');
-      Helpers.sleep(10);
-    }
-    return res;
-    //#endregion
-  }
-  //#endregion
+//   //#region api / init
+//   async init(options?: FiredevCrudInitOptions) {
+//     //#region @backend
+//     await super.init(options);
+//     if (global.useWorker) {
+//       await this.initDeamon(options.recreate || global.restartWorker);
+//       await this.initWatchingDb()
+//     }
+//     //#endregion
+//   }
+//   //#endregion
 
-  //#region api / init watching db.json
-  async initWatchingDb() {
-    // //#region @backend
-    // if (this.watchers[this.location]) {
-    //   Helpers.warn('[firedev-crud-demon] already watching db.json')
-    //   return;
-    // }
-    // const watcher: chokidar.FSWatcher = chokidar.watch([this.location], {
-    //   ignoreInitial: true,
-    //   ignorePermissionErrors: true,
-    // }).on('all', async (event, f) => {
-    //   f = crossPlatformPath(f);
-    //   console.log('file change d', f, event);
-    // });
-    // this.watchers[this.location] = watcher;
-    // //#endregion
-  }
+//   //#region api / create instance
+//   private async createInstance(classFN, entities, registerdOnPort, startNew: boolean) {
+//     //#region @backendFunc
+//     const res = await WorkersFactor.create<DbDaemonController>(
+//       classFN,
+//       entities,
+//       registerdOnPort,
+//       {
+//         killAlreadRegisteredProcess: startNew,
+//         startWorkerServiceAsChildProcess: startNew,
+//         disabledRealtime: false,
+//         preventSameContexts: true,
+//       }
+//     );
+//     if (process.platform === 'win32' && startNew) {
+//       Helpers.info('Waiting 10 seconds on windows platofrom...');
+//       Helpers.sleep(10);
+//     }
+//     return res;
+//     //#endregion
+//   }
+//   //#endregion
 
-  //#endregion
+//   //#region api / init watching db.json
+//   async initWatchingDb() {
+//     // //#region @backend
+//     // if (this.watchers[this.location]) {
+//     //   Helpers.warn('[firedev-crud-demon] already watching db.json')
+//     //   return;
+//     // }
+//     // const watcher: chokidar.FSWatcher = chokidar.watch([this.location], {
+//     //   ignoreInitial: true,
+//     //   ignorePermissionErrors: true,
+//     // }).on('all', async (event, f) => {
+//     //   f = crossPlatformPath(f);
+//     //   console.log('file change d', f, event);
+//     // });
+//     // this.watchers[this.location] = watcher;
+//     // //#endregion
+//   }
 
-  //#region api / init deamon
-  async initDeamon(recreate = false) {
-    //#region @backend
-    const entities = [DbUpdateProjectEntity];
-    const portsManager = await (await this.getCtrlInstanceBy<PortsController>(PortsController)).manager;
-    await portsManager.registerOnFreePort({
-      name: CLASS.getName(DbDaemonController)
-    }, {
-      actionWhenAssignedPort: async (itWasRegisterd, registerdOnPort) => {
+//   //#endregion
 
-        Helpers.log(`[tnp-db][deamon] ${itWasRegisterd ? 'already' : 'inited'} on port: ${registerdOnPort}`);
-        let res = await this.createInstance(
-          DbDaemonController,
-          entities,
-          registerdOnPort,
-          (!itWasRegisterd || recreate)
-        );
+//   //#region api / init deamon
+//   async initDeamon(recreate = false) {
+//     //#region @backend
+//     const entities = [DbUpdateProjectEntity];
+//     const portsManager = await (await this.getCtrlInstanceBy<PortsController>(PortsController)).manager;
+//     await portsManager.registerOnFreePort({
+//       name: CLASS.getName(DbDaemonController)
+//     }, {
+//       actionWhenAssignedPort: async (itWasRegisterd, registerdOnPort) => {
 
-        const isHealtyWorker = await res.instance.$$healty;
-        const copyDataToWorker = (!itWasRegisterd || recreate || !isHealtyWorker);
+//         Helpers.log(`[tnp-db][deamon] ${itWasRegisterd ? 'already' : 'inited'} on port: ${registerdOnPort}`);
+//         let res = await this.createInstance(
+//           DbDaemonController,
+//           entities,
+//           registerdOnPort,
+//           (!itWasRegisterd || recreate)
+//         );
 
-        if (!isHealtyWorker) {
-          res.context.destroy();
-          res = await this.createInstance(
-            DbDaemonController,
-            entities,
-            registerdOnPort,
-            true
-          );
-        }
-        if (copyDataToWorker) {
-          const allData = Helpers.readJson(this.location);
-          await res.instance.copyAllToWorker(allData, this.location).received;
-        }
+//         const isHealtyWorker = await res.instance.$$healty;
+//         const copyDataToWorker = (!itWasRegisterd || recreate || !isHealtyWorker);
 
-        this.context = res.context;
-        this.worker = res.instance;
-      }
-    });
+//         if (!isHealtyWorker) {
+//           res.context.destroy();
+//           res = await this.createInstance(
+//             DbDaemonController,
+//             entities,
+//             registerdOnPort,
+//             true
+//           );
+//         }
+//         if (copyDataToWorker) {
+//           const allData = Helpers.readJson(this.location);
+//           await res.instance.copyAllToWorker(allData, this.location).received;
+//         }
 
-    // process.exit(0)
-    // const copyRes = await this.worker.copyAllToWorker(await this.getAll(ProjectInstance)).received;
-    // console.log(copyRes.body.text);
+//         this.context = res.context;
+//         this.worker = res.instance;
+//       }
+//     });
+
+//     // process.exit(0)
+//     // const copyRes = await this.worker.copyAllToWorker(await this.getAll(ProjectInstance)).received;
+//     // console.log(copyRes.body.text);
 
 
 
-    //#endregion
-  }
-  //#endregion
+//     //#endregion
+//   }
+//   //#endregion
 
-  //#region api / get worker port
-  async getWokerPort() {
-    //#region @backendFunc
-    const portsManager = await (await this.getCtrlInstanceBy<PortsController>(PortsController)).manager;
-    return await portsManager.getPortOf({ name: CLASS.getName(DbDaemonController) });
-    //#endregion
-  }
-  //#endregion
+//   //#region api / get worker port
+//   async getWokerPort() {
+//     //#region @backendFunc
+//     const portsManager = await (await this.getCtrlInstanceBy<PortsController>(PortsController)).manager;
+//     return await portsManager.getPortOf({ name: CLASS.getName(DbDaemonController) });
+//     //#endregion
+//   }
+//   //#endregion
 
-  //#region api / kill worker
-  async killWorker() {
-    //#region @backend
-    const portsManager = await this.getPortsManager();
-    Helpers.log(`[killing worker] starting killing db worker...`);
-    try {
-      await this.worker.triggerSave().received;
-      Helpers.log(`[killing worker] trigerr save OK`);
-    } catch (error) {
-      Helpers.log(`[killing worker] trigerr save ERROR`);
-    }
-    const portTokill = await portsManager.getPortOf({ name: CLASS.getName(DbDaemonController) });
-    await Helpers.killProcessByPort(portTokill);
-    //#endregion
-  }
-  //#endregion
+//   //#region api / kill worker
+//   async killWorker() {
+//     //#region @backend
+//     const portsManager = await this.getPortsManager();
+//     Helpers.log(`[killing worker] starting killing db worker...`);
+//     try {
+//       await this.worker.triggerSave().received;
+//       Helpers.log(`[killing worker] trigerr save OK`);
+//     } catch (error) {
+//       Helpers.log(`[killing worker] trigerr save ERROR`);
+//     }
+//     const portTokill = await portsManager.getPortOf({ name: CLASS.getName(DbDaemonController) });
+//     await Helpers.killProcessByPort(portTokill);
+//     //#endregion
+//   }
+//   //#endregion
 
-  //#endregion
-}
+//   //#endregion
+// }
