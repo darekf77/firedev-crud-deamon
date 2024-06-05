@@ -28,7 +28,7 @@
   "useFramework": false,
   "required": [
   ],
-  "version": "v4",
+  "version": "v16",
   "workerPlugins": {},
   "license": "UNLICENSED",
 }
