@@ -1,17 +1,18 @@
 {
-  "resources": [
-    "README.md"
-  ],
+  "resources": ["README.md"],
+
   "overrided": {
     "ignoreDepsPattern": [],
     "includeAsDev": [],
     "includeOnly": ["background-worker-process"],
     "dependencies": {},
     "linkedFolders": [],
-    "npmFixes": [],
+    "npmFixes": []
   },
+
   "smartContainerBuildTarget": "",
   "linkedRepos": [],
+
   "libReleaseOptions": {
     "nodts": false,
     "obscure": false,
@@ -20,15 +21,15 @@
     "cliBuildNoDts": false,
     "cliBuildObscure": false,
     "cliBuildIncludeNodeModules": false,
-    "cliBuildUglify": false,
+    "cliBuildUglify": false
   },
+
   "smartContainerTarget": "",
   "type": "isomorphic-lib",
   "isCoreProject": false,
   "useFramework": false,
-  "required": [
-  ],
-  "version": "v16",
+  "required": [],
+  "version": "v18",
   "workerPlugins": {},
-  "license": "UNLICENSED",
+  "license": "UNLICENSED"
 }
